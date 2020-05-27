@@ -44,7 +44,10 @@ Again like the DVI-D, if you don't have a native port on your machine, you'll ne
 Yes, it's there, but why bother, it is analogue and not really up to the task of high res monitor tasks. Ok to get by for a bit, but find a different solution.
 
 ### HDMI
-#### This is where it gets difficult
+#### The Cable
+* You need to have a HDMI 2.0 or better cable for this to work at the higher resolutions.
+
+#### This is also where it gets difficult
 For some unknown reason Dell decided not to include all resolutions in the baked in EDID data file on the monitor. Which is where this all comes to grief and whay you are reading this epistle.
 * An EDID file is an identifer file or data that the monitor spit at your system when connected to explain the HDMI capabilities of the monitor, so your system knows how to talk to it.
 * By default Dell have not included the panel's native 2560x1440 in the EDID data assuming that you'd only use it on HDMI if using somethign other than a computer to connect to it.
@@ -83,18 +86,18 @@ On the Mac, as the forum link above covers Linux and Windows quite well, we need
 This is the bit I'm also struggling with.
 I've found an editor for EDID files, but not knowing a lot about this, I'm a bit of a bunny on using the tool to get something that will work. I'm concerned abotu bricking or damaging the monitor with the wrong settings too.
 
-What I have confirmed:
+#### What I have confirmed:
 * The Fix Michael outlined above does put the monitor into the managed mode we need
 * The mount command allows me to write the files to the system area and they have stuck so far (yet to re-enable System Integrity Protection)
 * The final part to the equation is locating a suitable EDID Hex data stream file for the monitor with the 2560x1440 resolution baked into it.
 
 ### The fun bit!
-So the steps are a comnbination of the bits from above.
+So the steps are a combination of the bits from above.
 
-You need the following installed and brought together.
+#### You need the following installed and brought together.
 
-* The ruby file from this Git, it is tweaked from the ruby file from https://gist.github.com/adaugherity/7435890. This is so we can feed the script a file rather than the download of the monitor EDID.
-* The EDID editor if you don't want to play with my file https://www.analogway.com/apac/products/software-tools/aw-edid-editor/
+* The ruby file from this Git, it is tweaked from the ruby file from https://gist.github.com/adaugherity/7435890. This is so we can feed the script a file rather than the thedirectly download one of the monitor's own EDID, as that is where the problem sources from.
+* The EDID editor if you don't want to trust my data string or you want to play https://www.analogway.com/apac/products/software-tools/aw-edid-editor/
 
 ## The Process:
 1. Restart your Mac. Before OS X starts up, hold down Command-R and keep it held down until you see an Apple icon. When you see the progress bar, release holding the Command-R and wait for recovery mode to boot.
@@ -123,9 +126,9 @@ A new folder with an odd name (mine was DisplayVendorID-10ac and Michael's was D
 11. Restart your Mac. After you login your monitor should finally look as expected.
 12. You should re-enable SIP at this point by rebooting back into recovery mode and typing csrutil enable in Terminal.
 
-I have included a couple of additional files for use if you wish.
+#### I have included a few additional files for use if you wish.
 * With the ioreg command you would have got a lot of other stuff you may want to play with, also too the HEX data stream I created may need tweaking for your situation. I'm running 2560x1440 @ 60hz which suits me, you may not want that.
-* You may want some comparrison on what you have for sense checking.
+* You may want some comparrison on what you are doing for sense checking and direct comparrison. I have used and documented these steps one by one, excluding typo's this worked for me.
 
 ### The Files
 * dell-u2711-blank.bin AWEDID Editor file you can open directly
