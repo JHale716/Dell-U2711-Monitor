@@ -26,6 +26,9 @@ The second bit is the more obvious bit, you need a DVI-D dual link cable.
 * This one local for me I would expect to work, being it is listed as a dual link DVI-D https://www.pbtech.co.nz/product/ITPAK621N/Dynamix-2M-DVI-D-Male-to-DVI-D-Male-Digital-Dual-L
 * This is a cable that won't work, Listed as HDMI (Which I'll come to soon) - DVI-D though to their credit they do state single link https://www.pbtech.co.nz/product/CABDNX1542/Dynamix-C-HDMIDVI-1-1M-HDMI-Male-to-DVI-D-Male-181
 * This is a good example of mislabelling, the incomplete pins in the plug give away the lack of dual channel. https://www.pbtech.co.nz/product/CABSTT1583045/StarTech-DVIMM6-6-ft-DVI-D-Single-Link-Cable---Mal
+#### The EDID file
+* Like HDMI, DVI-D is governed by the EDID file, so even though you may be able to get 1080p from your system, the monitor limits the signal resolution. 
+* My early use of DVI-D was on a Mac that didn't support the full resolution of the monitor, thus I choose to have something future proofed, not knowing at the time what a drama it woudl become. Agh!
 
 ### Ok that's DVI-D, what about Display Port (DP)
 #### The Adapter - If Needed
