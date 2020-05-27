@@ -84,7 +84,7 @@ On the Mac, as the forum link above covers Linux and Windows quite well, we need
 
 ### So how do you get the EDID data in a format your system can read?
 This is the bit I'm also struggling with.
-I've found an editor for EDID files, but not knowing a lot about this, I'm a bit of a bunny on using the tool to get something that will work. I'm concerned abotu bricking or damaging the monitor with the wrong settings too.
+I've found an editor for EDID files, but not knowing a lot about this, I'm a bit of a bunny on using the tool to get something that will work. I'm concerned about bricking or damaging the monitor with the wrong settings too.
 
 #### What I have confirmed:
 * The Fix Michael outlined above does put the monitor into the managed mode we need
