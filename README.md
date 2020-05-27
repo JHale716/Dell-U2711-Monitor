@@ -1,7 +1,7 @@
 # Dell-U2711-Monitor
 The 'fix' 'How To' 'Solve' for resolution problems with the Dell U2711 and others of it's ilk.
 
-So you're here and you've found this repo. Probably because you have had unfathomable frustration with the video settigns on your monitor and you've probably plugged it into a mac or tried to use the HDMI and found it's displaying HD/1080p/1920x1080 rather than the 2560x1440 the panel is capable of.
+So you're here and you've found this repo. Probably because you have had unfathomable frustration with the video settings on your monitor and you've probably plugged it into a mac or tried to use the HDMI and found it's displaying HD/1080p/1920x1080 rather than the 2560x1440 the panel is capable of.
 
 ## Yup, I've been there and it's a bit of a 'mare.
 
