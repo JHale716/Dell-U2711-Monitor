@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>DisplayProductName</key>
+  <string>Display - forced RGB mode (EDID override)</string>
+  <key>IODisplayEDID</key>
+  <data>AP///////wAQrFagTDE5MDQVAQTlPCJ44I4FrU8zsCYNUFSlXwCBALMAcU+p
+QIGA/wABAAEAgVsAUKCgKVAIILgAALAxAAB+AAAA9wAK///////wAAAAAAAA
+AAAAEAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAACk=
+</data>
+  <key>DisplayVendorID</key>
+  <integer>4268</integer>
+  <key>DisplayProductID</key>
+  <integer>41046</integer>
+</dict>
+</plist>
