@@ -1,0 +1,84 @@
+https://michaelcivitillo.com/overriding-edid-on-osx-for-external-monitors/
+January 21, 2017 Comments Off on Fixing EDID on OSX for External Monitors by Michael 
+
+Fixing EDID on OSX for External Monitors
+
+My two primary laptops today are a Dell XPS and the new Macbook Pro, both of which come equipped with USB-C. I picked up a Dell USB-C dock to interface with both laptops at my desk, however, the new Macbook Pro refused to behave with my new curved Samsung CF398 monitor. Instead of curved HD bliss I was presented with a bright pink and magenta overlay on the monitor when docked. Investigation revealed this is due to a mis-identification of the EDID data by OSX. If you’re having the same problem, heres how to easily fix it for any external monitor or dock with a Ruby script.
+
+    Copy the Ruby code below and paste into TextEdit and save the file as MonitorFix.rb in your home directory, or download from this GitHub page.
+    Restart your Mac. Before OS X starts up, hold down Command-R and keep it held down until you see an Apple icon. When you see the progress bar, release holding the Command-R and wait for recovery mode to boot.
+    From the Utilities menu, select Terminal.
+    In the terminal window, type: csrutil disable, and then press enter.
+    Restart your Mac.
+    Ensure you have just the monitor connected in the dock that is causing the display issue.
+    Open Terminal and type ruby MonitorFix.rb.
+    A new folder with an odd name (mine was DisplayVendorID-4c2d) will be created in your home directory. Move it into the “/System/Library/Displays/Contents/Resources/Overrides” folder.
+    Restart your Mac. After you login your monitor should finally look as expected.
+    You should re-enable SIP at this point by rebooting back into recovery mode and typing csrutil enable in Terminal.
+
+#!/usr/bin/ruby
+# Create display override file to force Mac OS X to use RGB mode for Display
+
+require 'base64'
+
+data=`ioreg -l -d0 -w 0 -r -c AppleDisplay`
+
+edids=data.scan(/IODisplayEDID.*?<([a-z0-9]+)>/i).flatten
+vendorids=data.scan(/DisplayVendorID.*?([0-9]+)/i).flatten
+productids=data.scan(/DisplayProductID.*?([0-9]+)/i).flatten
+
+displays = []
+edids.each_with_index do |edid, i|
+    disp = { "edid_hex"=>edid, "vendorid"=>vendorids[i].to_i, "productid"=>productids[i].to_i }
+    displays.push(disp)
+end
+
+# Process all displays
+if displays.length > 1
+    puts "Found %d displays!  You should only install the override file for the one which" % displays.length
+    puts "is giving you problems.","\n"
+end
+displays.each do |disp|
+# Retrieve monitor model from EDID data
+monitor_name=[disp["edid_hex"].match(/000000fc00(.*?)0a/){|m|m[1]}.to_s].pack("H*")
+if monitor_name.empty?
+    monitor_name = "Display"
+end
+
+puts "found display '#{monitor_name}': vendorid #{disp["vendorid"]}, productid #{disp["productid"]}, EDID:\n#{disp["edid_hex"]}"
+
+bytes=disp["edid_hex"].scan(/../).map{|x|Integer("0x#{x}")}.flatten
+
+puts "Setting color support to RGB 4:4:4 only"
+bytes[24] &= ~(0b11000)
+
+puts "Number of extension blocks: #{bytes[126]}"
+puts "removing extension block"
+bytes = bytes[0..127]
+bytes[126] = 0
+
+bytes[127] = (0x100-(bytes[0..126].reduce(:+) % 256)) % 256
+puts
+puts "Recalculated checksum: 0x%x" % bytes[127]
+puts "new EDID:\n#{bytes.map{|b|"%02X"%b}.join}"
+
+Dir.mkdir("DisplayVendorID-%x" % disp["vendorid"]) rescue nil
+f = File.open("DisplayVendorID-%x/DisplayProductID-%x" % [disp["vendorid"], disp["productid"]], 'w')
+f.write '<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">'
+f.write "
+<dict>
+  <key>DisplayProductName</key>
+  <string>#{monitor_name} - forced RGB mode (EDID override)</string>
+  <key>IODisplayEDID</key>
+  <data>#{Base64.encode64(bytes.pack('C*'))}</data>
+  <key>DisplayVendorID</key>
+  <integer>#{disp["vendorid"]}</integer>
+  <key>DisplayProductID</key>
+  <integer>#{disp["productid"]}</integer>
+</dict>
+</plist>"
+f.close
+puts "\n"
+end		# displays.each
