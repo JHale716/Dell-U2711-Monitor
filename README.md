@@ -3,12 +3,12 @@ The 'fix' 'How To' 'Solve' for resolution problems with the Dell U2711 and other
 
 So you're here and you've found this repo. Probably because you have had unfathomable frustration with the video settigns on your monitor and you've probably plugged it into a mac or tried to use the HDMI and found it's displaying HD/1080p/1920x1080 rather than the 2560x1440 the panel is capable of.
 
-### Yup, I've been there and it's a bit of a 'mare.
+## Yup, I've been there and it's a bit of a 'mare.
 
 So here's the deal. Having owned this panel from around 2012 from new, I've had my challenges too.
 On the Mac it has an annoying issue of not talking to the display port if your system sleeps or you switch inputs, and then there is the issues of connecting to the DVI ports or the HDMI where you get 1080p but nothing higher.
 
-### Let's unpack a few things.
+## Let's unpack a few things.
 
 * DVI-D This is true DVI-D dual link rather than the DVI-I that is also available, which is single link. DVI-D Single link is not a thing, it is DVI-I mislabeled. Which is frustrating as many DVI-I cables are labeled DVI-D when they are not. It is misleading marketing and bloody frustrating.
 * I've used DVI-D and display port (DP) on this monitor for years and it's generally been very very good. Except for the DP sleeping bit. I have run this on a range of systems, mainly Mac's and had full resolution on this too.
@@ -48,16 +48,41 @@ For some unknown reason Dell decided not to include all resolutions in the baked
 * This lengthy discussion on the issue covers it all in a lot more detail, adn it's confusing https://forums.whirlpool.net.au/thread/9lm2vrq3
 * In basic terms you need to 'update' the EDID file in the system, on the monitor or your computer, to get it to recognise the right resolution settings so you can go from there.
 
-#### Why the Git Hub Repo 
+## Why the Git Hub Repo 
 Both for my learning and so you can shortcut some of the pain and get to the point.
+And I desire to use the HDMI port on my Mac for the display so I don't have to sacrifice a USB-C/Thunderport 3 port for the display. 
+
+### What follows is pretty much for Mac users at this point, hopefully this has been useful in yoru journey if you are not a Mac user looking for a solution.
 * Yes this is a long read, as you need the background and things influence your choices, if you have alternative port options, that's the easy approach, if you only havd HDMI, then you're here reading this.
 
-On the Mac, as the forum link above covers Linux and Windows quite well, we need to do a few things that aren't the easiest to do and updates like Catalina have made it harder.
-* First off, this post by Michael Civitillo is the best approach to date I have found. https://michaelcivitillo.com/overriding-edid-on-osx-for-external-monitors/ I have included a copy/paste of the page in the repo incase it disappears, like some of the forum links above have.
+### Why not use SetResX?
+A good question and one that is valid, however, it doesn't solve the technical issue and leaves you with a screwy version of what you already have.
+* SetResX tricks your Mac into thinking it is connected to a higher res display and gives you more operating pixels for the picture displayed, but the underlying hardware is still running at 1080p even thought the Mac thinks it is at a higher resolution. Unless you're blind this makes it worse than 1080p on the screen to look at. 
+
+So to unpack that a bit more when using SetResX:
+* You Mac draws a 2560x1440 screen in it's graphic memory
+* Your Graphics hardware then stranslates that from 2560x1440 ro 1920x1080 (1080p) and squirts it up the cable to the monitor
+* The monitor receives the 1920x1080 data stream and then converts that by scaling (the default wide settign on your display) out to a 2560x1440 display.
+* You can confirm this by checking on your monitor, Menu, Display Settigns, Display Info. This will still say 1080p
+* If you change Wide Mode in the monitor Display Settigns menu from wide to 1:1 you'll see what I mean.
+
+You might say, so whats the problem with that, it's getting 2460x1440 from the Mac to the screen?
+* Yes it is, however, because of the scaling and stretching to get it there the pixels have been processed into and out of bits of pixels, which means that the final displayed image is nowhere as crisp as it should be. 
+* As I said earlier, if you're blind it's a soluton, but not one I'd be happy with.
+
+### Getting back to the native fix:
+On the Mac, as the forum link above covers Linux and Windows quite well, we need to do a few things that aren't the easiest to do, and updates like Catalina have made it harder.
+* First off, this post by Michael Civitillo is the best approach to date I have found for delivering the final solution, but it still has the issue that the solution still uses the monitor EDID data which is incorrect. https://michaelcivitillo.com/overriding-edid-on-osx-for-external-monitors/ I have included a copy/paste of the page in the repo in case it disappears, like some of the forum links above have.
 * Since Michael's 2017 post Apple has released Catalina, and this has made the / or root directory of the system read only. 
+* The way around that is to run "sudo mount -uw /" before you attmpt to copy anything into the system area. Again as Michael stated this needs to be used with caution, as you could screw up your system.  
 
-So the way around that is to run {sudo mount -uw /} before you attmpt to copy anything into the system area.  
+### So how do you get the EDID data in a format your system can read?
+This is the bit I'm also struggling with.
+I've found an editor for EDID files, but not knowing a lot about this, I'm a bit of a bunny on using the tool to get something that will work. I'm concerned abotu bricking or damaging the monitor with the wrong settings too.
 
-
+What I have confirmed:
+* The Fix Michael outlined above does put the monitor into the managed mode we need
+* The mount command allows me to write the files to the system area and they have stuck so far (yet to re-enable System Integrity Protection)
+* The final part to the equation is locating a suitable EDID Hex data stream file for the monitor with the 2560x1440 resolution baked into it.
 
 
