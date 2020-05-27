@@ -88,4 +88,52 @@ What I have confirmed:
 * The mount command allows me to write the files to the system area and they have stuck so far (yet to re-enable System Integrity Protection)
 * The final part to the equation is locating a suitable EDID Hex data stream file for the monitor with the 2560x1440 resolution baked into it.
 
+### The fun bit!
+So the steps are a comnbination of the bits from above.
+
+You need the following installed and brought together.
+
+* The ruby file from this Git, it is tweaked from the ruby file from https://gist.github.com/adaugherity/7435890. This is so we can feed the script a file rather than the download of the monitor EDID.
+* The EDID editor if you don't want to play with my file https://www.analogway.com/apac/products/software-tools/aw-edid-editor/
+
+## The Process:
+1. Restart your Mac. Before OS X starts up, hold down Command-R and keep it held down until you see an Apple icon. When you see the progress bar, release holding the Command-R and wait for recovery mode to boot.
+2. From the Utilities menu, select Terminal.
+3. In the terminal window, type: csrutil disable, and then press enter.
+4. Restart your Mac.
+5. Ensure you have just the monitor connected that is causing the display issue.
+6. Open terminal and get setup.
+6a. git clone https://github.com/jhale716/Dell-U2711-Monitor Dell-U2711-Patch
+6b. cd Dell-U2711-Patch
+6c. ioreg -l -d0 -w 0 -r -c AppleDisplay >>dell-u2711-patch.txt
+6d. nano dell-u2711-patch.txt
+6e. Here you are going to replace the string "IODisplayEDID" = < lots of numbers and letters > with this.  
+* 00FFFFFFFFFFFF0010AC56A0B54A050634150104E53C2278F08E05AD4F33B0260D5054A55F008100B300714FA9408180FF0001000100815B0050A0A029500820B80000B03100007E000000F7000AFFFFFFFFFFF000000000000000000010000000000000000000000000000000000010000000000000000000000000000001F402030A30E50D6C5A4C4500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000078
+* You need to ensure you have the <> in place as you started, no extra spaces and you are also going to have to make sure you have the correct string pasted. The Checksum at the end is specific to this string, so don't change this one.
+* Use your arrows to navigate and deleted the existing string before you paste the new one in, yes CTRL+v will work here.
+6f. Once you have done that, CTRL+x, then Y, then enter will save it.
+* I have included the sample files I created, for reference, they won't necessarily work on your system, which is why you need to do step 6 in it's entirity.
+7. Run the script to create the file you need. ruby patch-edid-file.rb
+A new folder with an odd name (mine was DisplayVendorID-10ac and Michael's was DisplayVendorID-4c2d) will be created in your home directory. 
+8. Now you need to enable write access tot he system files, sudo mount -uw / will do that for you.
+9. I recommend backing up the files you're about to copy across, just in case. 
+9a. Using the foldername you discovered in step 7, mkdir Backup-<NewFolder>
+9b. cp /System/Library/Displays/Contents/Resources/Overrides/<NewFolder>/* Backup-<NewFolder>/
+10. Copy your new EDID setup file into place sudo cp <NewFolder>/* /System/Library/Displays/Contents/Resources/Overrides/<NewFolder>/
+11. Restart your Mac. After you login your monitor should finally look as expected.
+12. You should re-enable SIP at this point by rebooting back into recovery mode and typing csrutil enable in Terminal.
+
+I have included a couple of additional files for use if you wish.
+* With the ioreg command you would have got a lot of other stuff you may want to play with, also too the HEX data stream I created may need tweaking for your situation. I'm running 2560x1440 @ 60hz which suits me, you may not want that.
+* You may want some comparrison on what you have for sense checking.
+
+### The Files
+* dell-u2711-blank.bin AWEDID Editor file you can open directly
+* dell-u2711-blankraw.dat the raw export file form AWEDID Editor before cleaning up
+* dell-u2711-blank.dat the Hex file exported from AWEDID Editor with the precurser info, spaces and carriage returns removed to give the hex string needed.
+* dell-u2711-patch.txt as an example of what yours should look like, don't use this one!
+* DisplayVendorID-10ac for example of the final file you should have to copy across before you reboot.
+
+Hopefully this has been helpful and useful to overcome a very daft decision for Dell to have made originally on such a high end monitor at the time.
+
 
