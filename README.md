@@ -118,11 +118,11 @@ So the steps are a combination of the bits from above.
 * I have included the sample files I created, for reference, they won't necessarily work on your system, which is why you need to do step 6 in it's entirity.
 7. Run the script to create the file you need. ruby patch-edid-file.rb
 A new folder with an odd name (mine was DisplayVendorID-10ac and Michael's was DisplayVendorID-4c2d) will be created in your home directory. 
-8. Now you need to enable write access tot he system files, sudo mount -uw / will do that for you.
-9. I recommend backing up the files you're about to copy across, just in case. 
-9a. Using the foldername you discovered in step 7, mkdir Backup-<NewFolder>
-9b. cp /System/Library/Displays/Contents/Resources/Overrides/<NewFolder>/* Backup-<NewFolder>/
-10. Copy your new EDID setup file into place sudo cp <NewFolder>/* /System/Library/Displays/Contents/Resources/Overrides/<NewFolder>/
+8. Now you need to enable write access to the system files, sudo mount -uw / will do that for you.
+9. I recommend backing up the files you're about to copy across, just in case.
+9a. Using the foldername you discovered in step 7, mkdir Backup-{NewFolder}
+9b. cp /System/Library/Displays/Contents/Resources/Overrides/{NewFolder}/* Backup-{NewFolder}/
+10. Copy your new EDID setup file into place sudo cp {NewFolder}/* /System/Library/Displays/Contents/Resources/Overrides/{NewFolder}/
 11. Restart your Mac. After you login your monitor should finally look as expected.
 12. You should re-enable SIP at this point by rebooting back into recovery mode and typing csrutil enable in Terminal.
 
