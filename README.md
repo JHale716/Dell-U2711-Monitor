@@ -108,7 +108,6 @@ So the steps are a combination of the bits from above.
 4. Restart your Mac.
 5. Ensure you have just the monitor connected that is causing the display issue.
 6. Open terminal and get setup.
-
 6.1. git clone https://github.com/jhale716/Dell-U2711-Monitor Dell-U2711-Patch
 6.2. cd Dell-U2711-Patch
 6.3. ioreg -l -d0 -w 0 -r -c AppleDisplay >>dell-u2711-patch.txt
