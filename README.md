@@ -109,22 +109,22 @@ So the steps are a combination of the bits from above.
 5. Ensure you have just the monitor connected that is causing the display issue.
 6. Open terminal and get setup.
 
-6.a. git clone https://github.com/jhale716/Dell-U2711-Monitor Dell-U2711-Patch
-6.b. cd Dell-U2711-Patch
-6.c. ioreg -l -d0 -w 0 -r -c AppleDisplay >>dell-u2711-patch.txt
-6.d. nano dell-u2711-patch.txt (I use nano as my terminal editor)
-6.e. Here you are going to replace the string "IODisplayEDID" = < lots of numbers and letters > with this.  
+6.1. git clone https://github.com/jhale716/Dell-U2711-Monitor Dell-U2711-Patch
+6.2. cd Dell-U2711-Patch
+6.3. ioreg -l -d0 -w 0 -r -c AppleDisplay >>dell-u2711-patch.txt
+6.4. nano dell-u2711-patch.txt (I use nano as my terminal editor)
+6.5. Here you are going to replace the string "IODisplayEDID" = < lots of numbers and letters > with this.  
 * 00FFFFFFFFFFFF0010AC56A0B54A050634150104E53C2278F08E05AD4F33B0260D5054A55F008100B300714FA9408180FF0001000100815B0050A0A029500820B80000B03100007E000000F7000AFFFFFFFFFFF000000000000000000010000000000000000000000000000000000010000000000000000000000000000001F402030A30E50D6C5A4C4500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000078
 * You need to ensure you have the <> in place as you started, no extra spaces and you are also going to have to make sure you have the correct string pasted. The Checksum at the end is specific to this string, so don't change this one.
 * Use your arrows to navigate and deleted the existing string before you paste the new one in, yes CTRL+v will work here.
-6.f. Once you have done that, CTRL+x, then Y, then enter will save it.
+6.6. Once you have done that, CTRL+x, then Y, then enter will save it.
 * I have included the sample files I created, for reference, they won't necessarily work on your system, which is why you need to do step 6 in it's entirity.
 7. Run the script to create the file you need. ruby patch-edid-file.rb
 A new folder with an odd name (mine was DisplayVendorID-10ac and Michael's was DisplayVendorID-4c2d) will be created in your home directory. 
 8. Now you need to enable write access to the system files, sudo mount -uw / will do that for you.
 9. I recommend backing up the files you're about to copy across, just in case.
-9.a. Using the foldername you discovered in step 7, mkdir Backup-{NewFolder}
-9.b. cp /System/Library/Displays/Contents/Resources/Overrides/{NewFolder}/* Backup-{NewFolder}/
+9.1. Using the foldername you discovered in step 7, mkdir Backup-{NewFolder}
+9.2. cp /System/Library/Displays/Contents/Resources/Overrides/{NewFolder}/* Backup-{NewFolder}/
 10. Copy your new EDID setup file into place sudo cp {NewFolder}/* /System/Library/Displays/Contents/Resources/Overrides/{NewFolder}/
 11. Restart your Mac. After you login your monitor should finally look as expected.
 12. You should re-enable SIP at this point by rebooting back into recovery mode and typing csrutil enable in Terminal.
