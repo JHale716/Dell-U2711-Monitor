@@ -1,6 +1,8 @@
 # Dell-U2711-Monitor
 The 'fix' 'How To' 'Solve' for resolution problems with the Dell U2711 and others of it's ilk.
 
+(It has been reported that this doesn't work with the M1 Mac, my Dell has since died and I can’t test or verify this further)
+
 So you're here and you've found this repo. Probably because you have had unfathomable frustration with the video settings on your monitor and you've probably plugged it into a mac or tried to use the HDMI and found it's displaying HD/1080p/1920x1080 rather than the 2560x1440 the panel is capable of. And this will give you a 60hz refresh rate, rather than the 35hz rate in another soluton. (With the bits to help you edit things to suit you for what you need to) ;) 
 
 ## Yup, I've been there and it's a bit of a 'mare.
@@ -12,7 +14,7 @@ On the Mac it has an annoying issue of not talking to the display port if your s
 
 * DVI-D This is true DVI-D dual link rather than the DVI-I that is also available, which is single link. DVI-D Single link is not a thing, it is DVI-I mislabeled. Which is frustrating as many DVI-I cables are labeled DVI-D when they are not. It is misleading marketing and bloody frustrating.
 * I've used DVI-D and display port (DP) on this monitor for years and it's generally been very very good. Except for the DP sleeping bit. I have run this on a range of systems, mainly Mac's and had full resolution on this too.
-* Anything using HDMI is a pain int he arse, either as the source from yoru machine or as the receiver on the monitor, and this has everythign to do with the EDID configuration on the monitor.
+* Anything using HDMI is a pain in the arse, either as the source from your machine or as the receiver on the monitor, and this has everything to do with the EDID configuration on the monitor.
 
 ## The tricks:
 ### DVI-D
@@ -28,15 +30,15 @@ The second bit is the more obvious bit, you need a DVI-D dual link cable.
 * This is a good example of mislabelling, the incomplete pins in the plug give away the lack of dual channel. https://www.pbtech.co.nz/product/CABSTT1583045/StarTech-DVIMM6-6-ft-DVI-D-Single-Link-Cable---Mal
 #### The EDID file
 * Like HDMI, DVI-D is governed by the EDID file, so even though you may be able to get 1080p from your system, the monitor limits the signal resolution. 
-* My early use of DVI-D was on a Mac that didn't support the full resolution of the monitor, thus I choose to have something future proofed, not knowing at the time what a drama it woudl become. Agh!
+* My early use of DVI-D was on a Mac that didn't support the full resolution of the monitor, thus I choose to have something future proofed, not knowing at the time what a drama it would become. Agh!
 
 ### Ok that's DVI-D, what about Display Port (DP)
 #### The Adapter - If Needed
 Again like the DVI-D, if you don't have a native port on your machine, you'll need an adapter. This a little simpler on than DVI-D as the Display Port protocol is much higher in bandwidth as a result.
 * So pretty much any suitable adapter is going to do the job here. The display port solution is my preferred approach, though going from HDMI to DP is a problem, but Thunderbolt/Mini DP to DP is pretty solid.
-* With this solution you may have to turn off system sleep, as you need to keep the video card alive for the DP conntion to not drop out. Power off screen save is ok, that's a blanking signal, suspend your system and it doesn't play noce when it comes back. 
+* With this solution you may have to turn off system sleep, as you need to keep the video card alive for the DP conntion to not drop out. Power off screen save is ok, that's a blanking signal, suspend your system and it doesn't play nice when it comes back. 
 * Also too, if you need to switch sources regularly, then avoid DP as the choice of connection.
-* If you wish to use the PBP, picture by picture I think, settign then DP is off the cards too, it's not included. HDMI, Composite, and Component are the only options
+* If you wish to use the PBP, picture by picture I think, setting then DP is off the cards too, it's not included. HDMI, Composite, and Component are the only options
 #### The Cable
 * Grab any cable, they should all work.
 
@@ -50,16 +52,16 @@ Yes, it's there, but why bother, it is analogue and not really up to the task of
 #### This is also where it gets difficult
 For some unknown reason Dell decided not to include all resolutions in the baked in EDID data file on the monitor. Which is where this all comes to grief and whay you are reading this epistle.
 * An EDID file is an identifer file or data that the monitor spit at your system when connected to explain the HDMI capabilities of the monitor, so your system knows how to talk to it.
-* By default Dell have not included the panel's native 2560x1440 in the EDID data assuming that you'd only use it on HDMI if using somethign other than a computer to connect to it.
-* This lengthy discussion on the issue covers it all in a lot more detail, adn it's confusing https://forums.whirlpool.net.au/thread/9lm2vrq3
+* By default Dell have not included the panel's native 2560x1440 in the EDID data assuming that you'd only use it on HDMI if using something other than a computer to connect to it.
+* This lengthy discussion on the issue covers it all in a lot more detail, and it's confusing https://forums.whirlpool.net.au/thread/9lm2vrq3
 * In basic terms you need to 'update' the EDID file in the system, on the monitor or your computer, to get it to recognise the right resolution settings so you can go from there.
 
 ## Why the Git Hub Repo 
 Both for my learning and so you can shortcut some of the pain and get to the point.
 And I desire to use the HDMI port on my Mac for the display so I don't have to sacrifice a USB-C/Thunderport 3 port for the display. 
 
-### What follows is pretty much for Mac users at this point, hopefully this has been useful in yoru journey if you are not a Mac user looking for a solution.
-* Yes this is a long read, as you need the background and things influence your choices, if you have alternative port options, that's the easy approach, if you only havd HDMI, then you're here reading this.
+### What follows is pretty much for Mac users at this point, hopefully this has been useful in your journey if you are not a Mac user looking for a solution.
+* Yes this is a long read, as you need the background and things influence your choices, if you have alternative port options, that's the easy approach, if you only have HDMI, then you're here reading this.
 
 ### Why not use SetResX?
 A good question and one that is valid, however, it doesn't solve the technical issue and leaves you with a screwy version of what you already have.
@@ -67,12 +69,12 @@ A good question and one that is valid, however, it doesn't solve the technical i
 
 So to unpack that a bit more when using SetResX:
 * You Mac draws a 2560x1440 screen in it's graphic memory
-* Your Graphics hardware then stranslates that from 2560x1440 ro 1920x1080 (1080p) and squirts it up the cable to the monitor
-* The monitor receives the 1920x1080 data stream and then converts that by scaling (the default wide settign on your display) out to a 2560x1440 display.
-* You can confirm this by checking on your monitor, Menu, Display Settigns, Display Info. This will still say 1080p
-* If you change Wide Mode in the monitor Display Settigns menu from wide to 1:1 you'll see what I mean.
+* Your Graphics hardware then stranslates that from 2560x1440 to 1920x1080 (1080p) and squirts it up the cable to the monitor
+* The monitor receives the 1920x1080 data stream and then converts that by scaling (the default wide setting on your display) out to a 2560x1440 display.
+* You can confirm this by checking on your monitor, Menu, Display Settiings, Display Info. This will still say 1080p
+* If you change Wide Mode in the monitor Display Settings menu from wide to 1:1 you'll see what I mean.
 
-You might say, so whats the problem with that, it's getting 2460x1440 from the Mac to the screen?
+You might say, so what‘s the problem with that, it's getting 2460x1440 from the Mac to the screen?
 * Yes it is, however, because of the scaling and stretching to get it there the pixels have been processed into and out of bits of pixels, which means that the final displayed image is nowhere as crisp as it should be. 
 * As I said earlier, if you're blind it's a soluton, but not one I'd be happy with.
 
@@ -96,7 +98,7 @@ So the steps are a combination of the bits from above.
 
 #### You need the following installed and brought together.
 
-* The ruby file from this Git, it is tweaked from the ruby file from https://gist.github.com/adaugherity/7435890. This is so we can feed the script a file rather than the thedirectly download one of the monitor's own EDID, as that is where the problem sources from.
+* The ruby file from this Git, it is tweaked from the ruby file from https://gist.github.com/adaugherity/7435890. This is so we can feed the script a file rather than the directly download one of the monitor's own EDID, as that is where the problem sources from.
 * The EDID editor if you don't want to trust my data string or you want to play https://www.analogway.com/apac/products/software-tools/aw-edid-editor/
 
 ## The Process:
@@ -106,22 +108,23 @@ So the steps are a combination of the bits from above.
 4. Restart your Mac.
 5. Ensure you have just the monitor connected that is causing the display issue.
 6. Open terminal and get setup.
-6a. git clone https://github.com/jhale716/Dell-U2711-Monitor Dell-U2711-Patch
-6b. cd Dell-U2711-Patch
-6c. ioreg -l -d0 -w 0 -r -c AppleDisplay >>dell-u2711-patch.txt
-6d. nano dell-u2711-patch.txt
-6e. Here you are going to replace the string "IODisplayEDID" = < lots of numbers and letters > with this.  
+
+6.a. git clone https://github.com/jhale716/Dell-U2711-Monitor Dell-U2711-Patch
+6.b. cd Dell-U2711-Patch
+6.c. ioreg -l -d0 -w 0 -r -c AppleDisplay >>dell-u2711-patch.txt
+6.d. nano dell-u2711-patch.txt (I use nano as my terminal editor)
+6.e. Here you are going to replace the string "IODisplayEDID" = < lots of numbers and letters > with this.  
 * 00FFFFFFFFFFFF0010AC56A0B54A050634150104E53C2278F08E05AD4F33B0260D5054A55F008100B300714FA9408180FF0001000100815B0050A0A029500820B80000B03100007E000000F7000AFFFFFFFFFFF000000000000000000010000000000000000000000000000000000010000000000000000000000000000001F402030A30E50D6C5A4C4500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000078
 * You need to ensure you have the <> in place as you started, no extra spaces and you are also going to have to make sure you have the correct string pasted. The Checksum at the end is specific to this string, so don't change this one.
 * Use your arrows to navigate and deleted the existing string before you paste the new one in, yes CTRL+v will work here.
-6f. Once you have done that, CTRL+x, then Y, then enter will save it.
+6.f. Once you have done that, CTRL+x, then Y, then enter will save it.
 * I have included the sample files I created, for reference, they won't necessarily work on your system, which is why you need to do step 6 in it's entirity.
 7. Run the script to create the file you need. ruby patch-edid-file.rb
 A new folder with an odd name (mine was DisplayVendorID-10ac and Michael's was DisplayVendorID-4c2d) will be created in your home directory. 
 8. Now you need to enable write access to the system files, sudo mount -uw / will do that for you.
 9. I recommend backing up the files you're about to copy across, just in case.
-9a. Using the foldername you discovered in step 7, mkdir Backup-{NewFolder}
-9b. cp /System/Library/Displays/Contents/Resources/Overrides/{NewFolder}/* Backup-{NewFolder}/
+9.a. Using the foldername you discovered in step 7, mkdir Backup-{NewFolder}
+9.b. cp /System/Library/Displays/Contents/Resources/Overrides/{NewFolder}/* Backup-{NewFolder}/
 10. Copy your new EDID setup file into place sudo cp {NewFolder}/* /System/Library/Displays/Contents/Resources/Overrides/{NewFolder}/
 11. Restart your Mac. After you login your monitor should finally look as expected.
 12. You should re-enable SIP at this point by rebooting back into recovery mode and typing csrutil enable in Terminal.
